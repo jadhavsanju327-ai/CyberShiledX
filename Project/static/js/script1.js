@@ -59,11 +59,8 @@ function checkMessage() {
         result.style.color = "green";
     }
 }
-
-
-
 /* ================================
-   2️⃣ ADVANCED LINK CHECK
+   2️⃣ FAKE LINK DETECTOR
 ================================ */
 
 function checkLink() {
@@ -79,29 +76,33 @@ function checkLink() {
 
     let score = 0;
 
-    // Shortened links
-    if (link.includes("bit.ly") || link.includes("tinyurl") || link.includes("t.co")) {
-        score += 3;
-    }
+    const highRiskWords = [
+        "verify", "kyc", "bonus", "reward",
+        "free", "otp", "urgent", "login",
+        "update", "secure", "bank"
+    ];
 
-    // Suspicious characters
-    if (link.includes("@") || link.includes("-secure") || link.includes("verify")) {
-        score += 2;
-    }
+    const dangerousDomains = [
+        ".xyz", ".top", ".click", ".ru", ".shop", ".info"
+    ];
 
-    // Too many numbers in URL
-    let numberCount = (link.match(/\d/g) || []).length;
-    if (numberCount > 5) score += 2;
+    highRiskWords.forEach(word => {
+        if (link.includes(word)) score += 2;
+    });
 
-    // Not https
-    if (!link.startsWith("https")) score += 1;
+    dangerousDomains.forEach(domain => {
+        if (link.includes(domain)) score += 3;
+    });
 
-    if (score >= 5) {
-        result.innerHTML = "🚨 Dangerous Link Detected!";
+    if (link.includes("@")) score += 3;
+    if (!link.startsWith("https")) score += 2;
+
+    if (score >= 6) {
+        result.innerHTML = "🚨 HIGH RISK FAKE LINK!";
         result.style.color = "red";
     }
-    else if (score >= 2) {
-        result.innerHTML = "⚠️ Suspicious link. Verify before opening.";
+    else if (score >= 3) {
+        result.innerHTML = "⚠️ Suspicious link.";
         result.style.color = "orange";
     }
     else {
@@ -111,45 +112,8 @@ function checkLink() {
 }
 
 
-
 /* ================================
-   3️⃣ SMART DIGITAL ASSISTANT
-================================ */
-
-function askAssistant() {
-
-    let question = document.getElementById("assistantInput").value.toLowerCase().trim();
-    let result = document.getElementById("assistantResult");
-
-    if (question === "") {
-        result.innerHTML = "Ask something about online safety.";
-        result.style.color = "orange";
-        return;
-    }
-
-    if (question.includes("otp")) {
-        result.innerHTML = "Never share OTP with anyone, even bank officials.";
-    }
-    else if (question.includes("hack")) {
-        result.innerHTML = "Use strong passwords and enable 2-factor authentication.";
-    }
-    else if (question.includes("scam")) {
-        result.innerHTML = "Scams often create urgency and request personal details.";
-    }
-    else if (question.includes("password")) {
-        result.innerHTML = "Use a mix of letters, numbers & symbols for strong passwords.";
-    }
-    else {
-        result.innerHTML = "Stay alert. Avoid suspicious links and unknown calls.";
-    }
-
-    result.style.color = "lightblue";
-}
-
-
-
-/* ================================
-   4️⃣ FAKE PROFILE DETECTOR
+   3️⃣ FAKE PROFILE DETECTOR
 ================================ */
 
 function checkProfile() {
@@ -166,9 +130,12 @@ function checkProfile() {
     let score = 0;
 
     const scamIndicators = [
-        "investment", "crypto", "quick money",
-        "guaranteed return", "urgent", "dm me",
-        "business opportunity"
+        "crypto", "investment", "guaranteed return",
+        "quick money", "business opportunity",
+        "dm me", "whatsapp", "telegram",
+        "army officer", "syria", "foreign",
+        "send money", "loan offer",
+        "rich investor"
     ];
 
     scamIndicators.forEach(word => {
@@ -177,18 +144,58 @@ function checkProfile() {
 
     if (text.includes("model") && text.includes("dm")) score += 2;
 
-    if (score >= 4) {
-        result.innerHTML = "🚨 High probability fake/scam profile!";
+    if (score >= 6) {
+        result.innerHTML = "🚨 HIGH RISK FAKE PROFILE!";
         result.style.color = "red";
     }
-    else if (score >= 2) {
-        result.innerHTML = "⚠️ Profile seems suspicious.";
+    else if (score >= 3) {
+        result.innerHTML = "⚠️ Profile looks suspicious.";
         result.style.color = "orange";
     }
     else {
         result.innerHTML = "✅ Profile appears normal.";
         result.style.color = "green";
     }
+}
+
+/* ================================
+   DIGITAL SAFETY ASSISTANT
+================================ */
+
+function askAssistant() {
+
+    let input = document.getElementById("assistantInput").value.toLowerCase().trim();
+    let result = document.getElementById("assistantResult");
+
+    if (input === "") {
+        result.innerHTML = "Please ask a question.";
+        result.style.color = "orange";
+        return;
+    }
+
+    let response = "";
+
+    if (input.includes("otp")) {
+        response = "🚨 Never share your OTP with anyone. Banks never ask for OTP.";
+    }
+    else if (input.includes("phishing") || input.includes("fake message")) {
+        response = "⚠️ Check sender, avoid clicking unknown links, and verify before responding.";
+    }
+    else if (input.includes("password")) {
+        response = "🔐 Use strong passwords with letters, numbers, and symbols.";
+    }
+    else if (input.includes("upi") || input.includes("pin")) {
+        response = "🚨 Never share your UPI PIN. No one needs your PIN to send money.";
+    }
+    else if (input.includes("scam call") || input.includes("fake call")) {
+        response = "📞 Disconnect immediately if someone asks for bank or personal details.";
+    }
+    else {
+        response = "🤖 Stay alert online. Never share personal, OTP, or banking details with unknown people.";
+    }
+
+    result.innerHTML = response;
+    result.style.color = "lightblue";
 }
 
 
