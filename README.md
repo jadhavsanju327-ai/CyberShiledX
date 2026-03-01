@@ -12,10 +12,11 @@ Shield X (also known as Cybersecurity X) is a modern web application designed to
 - **Analytics Dashboard:** Visualize your security health with risk distribution charts and scan statistics.
 - **Modern UI:** A sleek, responsive interface built with modern CSS techniques including glassmorphism and dark mode aesthetics.
 
-## 🎬 Demo Video
+## 🎬 Demo & Presentation
 
-Watch the Shield X presentation and demo here:
-[**Shield X - AI Fraud Detection Demo**](https://drive.google.com/file/d/1ycOaHKR21dQ6CclcXViy7dbA6ZuUJoHk/view?usp=drivesdk)
+Access the project materials here:
+- [**Shield X - AI Fraud Detection Demo Video**](https://drive.google.com/file/d/1ycOaHKR21dQ6CclcXViy7dbA6ZuUJoHk/view?usp=drivesdk)
+- [**Shield X - Project Presentation (PPT)**](https://drive.google.com/file/d/1JgSnVSZhxHPGa_9hJ0-PCJaUobwb14NI/view?usp=drivesdk)
 
 ## 🛠️ Tech Stack
 
